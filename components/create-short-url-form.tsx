@@ -1,72 +1,14 @@
 'use client';
 
-import { ErrorResponse } from '@/app/api/shorten/route';
-import { SuccessResponse } from '@/app/api/shorten/route';
 import { useFormState } from 'react-dom';
 import { Input } from './ui/input';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
-import { normalizeUrl } from '@/lib/utils';
 import Result from './result';
+import { createShortUrlAction } from '@/lib/actions';
 
 const initialState = {
   error: null,
-};
-
-async function createShortUrlAction(_: State, formData: FormData): Promise<State> {
-  console.log('createShortUrlAction has started...');
-  const url = formData.get('url');
-  console.log('URL:', url);
-
-  if (!url) {
-    return { error: 'URL is required' };
-  }
-
-  if (typeof url !== 'string') {
-    return { error: 'URL must be a string' };
-  }
-
-  if (url.trim() === '') {
-    return { error: 'URL cannot be empty' };
-  }
-
-  try {
-    console.log('Fetching...');
-    const response = await fetch('/api/shorten', {
-      method: 'POST',
-      body: JSON.stringify({ url: normalizeUrl(url.trim()) }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const data = (await response.json()) as SuccessResponse | ErrorResponse;
-
-    console.log('Response:', data);
-
-    if (!response.ok) {
-      return { error: 'error' in data ? data.error : 'Failed to shorten URL' };
-    }
-
-    if ('error' in data) {
-      return { error: data.error };
-    }
-
-    return { error: null, data: { shortUrl: data.shortUrl, shortCode: data.shortCode, originalUrl: data.originalUrl } };
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {
-    console.error('Error shortening URL:', e);
-    return { error: 'Failed to shorten URL' };
-  }
-}
-
-type State = {
-  error: string | null;
-  data?: {
-    shortUrl: string;
-    shortCode: string;
-    originalUrl: string;
-  };
 };
 
 export default function CreateShortUrlForm() {
