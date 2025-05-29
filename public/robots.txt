@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Block crawling of shortened URLs to avoid indexing redirects
+Disallow: /*/
+
+# Sitemap location
+Sitemap: https://minilink.vercel.app/sitemap.xml
+
+# Crawl delay (optional - helps with server load)
+Crawl-delay: 1
