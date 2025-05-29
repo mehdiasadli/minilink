@@ -14,7 +14,9 @@ const initialState = {
 };
 
 async function createShortUrlAction(_: State, formData: FormData): Promise<State> {
+  console.log('createShortUrlAction has started...');
   const url = formData.get('url');
+  console.log('URL:', url);
 
   if (!url) {
     return { error: 'URL is required' };
@@ -29,6 +31,7 @@ async function createShortUrlAction(_: State, formData: FormData): Promise<State
   }
 
   try {
+    console.log('Fetching...');
     const response = await fetch('/api/shorten', {
       method: 'POST',
       body: JSON.stringify({ url: normalizeUrl(url.trim()) }),
@@ -38,6 +41,8 @@ async function createShortUrlAction(_: State, formData: FormData): Promise<State
     });
 
     const data = (await response.json()) as SuccessResponse | ErrorResponse;
+
+    console.log('Response:', data);
 
     if (!response.ok) {
       return { error: 'error' in data ? data.error : 'Failed to shorten URL' };
@@ -50,6 +55,7 @@ async function createShortUrlAction(_: State, formData: FormData): Promise<State
     return { error: null, data: { shortUrl: data.shortUrl, shortCode: data.shortCode, originalUrl: data.originalUrl } };
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
+    console.error('Error shortening URL:', e);
     return { error: 'Failed to shorten URL' };
   }
 }
