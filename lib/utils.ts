@@ -16,7 +16,7 @@ export function cn(...inputs: ClassValue[]) {
  * generateShortCode(8); // "a1b2c3d4"
  */
 export function generateShortCode(length = 6) {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const chars = 'abcdefghijklmnopqrstuvwxyzZ0123456789';
   let result = '';
 
   for (let i = 0; i < length; i++) {
@@ -26,7 +26,7 @@ export function generateShortCode(length = 6) {
   return result;
 }
 
-const BASE62_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const BASE62_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
 
 /**
  * Encode a number to a base62 string
