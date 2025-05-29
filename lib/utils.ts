@@ -125,18 +125,9 @@ export function isValidUrl(url: string) {
  *
  */
 export function normalizeUrl(url: string): string {
-  if (!url.includes('.')) {
-    return `https://${url}.com`;
-  }
-
-  const regex = /^(http(s)?)?(?::\/\/)?(?:www\.)?([^\.]+)(?:\.)?(.+)$/;
-  const match = url.match(regex);
-
-  if (!match) {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
     return url;
   }
 
-  const [, protocol, domain, tld] = match;
-
-  return `${protocol ?? 'https'}://${domain}.${tld ?? 'com'}`;
+  return `https://${url}`;
 }

@@ -82,6 +82,11 @@ export default function CreateShortUrlForm() {
             autoFocus
           />
 
+          {/* description */}
+          <p className='text-xs text-muted-foreground'>
+            Enter the URL either with or without <code>http://</code>
+          </p>
+
           {state.error && <p className='text-sm text-destructive pb-2'>{state.error}</p>}
         </div>
 
