@@ -103,7 +103,7 @@ export function generateShortUrl(id: number) {
  */
 export function isValidUrl(url: string) {
   try {
-    new URL(url);
+    new URL(normalizeUrl(url));
     return true;
   } catch (e) {
     console.error('Invalid URL:', url, '; Error:', e);
