@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { generateShortCode, isValidUrl } from '@/lib/utils';
 import { shortenUrlSchema } from '@/lib/schemas';
 import { z } from 'zod';
-import { Prisma } from '@/lib/generated/prisma';
+import { Prisma } from '@prisma/client';
 import { getClientIP, rateLimit } from '@/lib/rate-limit';
 
 export type SuccessResponse = {
